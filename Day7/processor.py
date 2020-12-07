@@ -72,12 +72,12 @@ def countInBag(bag):
         else:
             childBagName = makeStringPlural(child[2:len(child)])
             childBagNumber = getOcurrencesOfChild(bag.children,child)
-            returnValue = returnValue + childBagNumber * countInBag(bagContents[childBagName]) + 1
+            returnValue = returnValue + childBagNumber * countInBag(bagContents[childBagName])
     return returnValue
 
 def part2():
     counter = 0
     for bag in bagContents["shiny gold bags"].children:
-        counter = counter + countInBag(bagContents[bag[2:len(bag)]])
+        counter = counter + int(bag[0:2])*countInBag(bagContents[bag[2:len(bag)]])
     print("part 2 is",counter)
 part2()    
