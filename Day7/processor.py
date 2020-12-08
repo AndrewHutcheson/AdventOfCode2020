@@ -33,18 +33,15 @@ print(iterateAllBagsInBag('shiny gold bag'))
 
 #part 1
 def findSubBagWithName(bag,searchName):
-    found = False
-    if(bag == searchName):
-        found = True
-    else:
-        for subBag in bagDictionary[bag]:
-            if(subBag != "no other bag"):    
-                subBagName = subBag[2:len(subBag)]
-                if(subBagName == searchName):
-                    found = True
-                else:
-                    found = findSubBagWithName(subBagName,searchName)
-    return found
+    Found = False
+    for subBag in bagDictionary[bag]:
+        if(subBag != "no other bag"):    
+            subBagName = subBag[2:len(subBag)]
+            if(subBagName == searchName):
+                Found = True
+            if(findSubBagWithName(subBagName,searchName)):
+                Found = True
+    return Found
 
 #part 1
 counter = 0
