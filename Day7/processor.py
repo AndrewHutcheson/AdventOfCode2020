@@ -11,10 +11,6 @@ for line in lines:
     children = parsedLine[1].split(", ")
     bagDictionary[parent] = children
 
-#make a test case:
-#dim red bags contain 2 dim salmon bags, 2 faded orange bags, 5 muted aqua bags.
-#print(bagDictionary['dim red bag'])
-
 #part 2
 def iterateAllBagsInBag(bag):
     counter = 0
@@ -28,7 +24,6 @@ def iterateAllBagsInBag(bag):
             counter = counter + childCount
     return counter
 
-#print(iterateAllBagsInBag('dim red bag'))
 print(iterateAllBagsInBag('shiny gold bag'))
 
 #part 1
