@@ -31,20 +31,18 @@ def iterateAllBagsInBag(bag):
 #print(iterateAllBagsInBag('dim red bag'))
 print(iterateAllBagsInBag('shiny gold bag'))
 
-def countAllBagsInBagWithName(bag,searchName):
-    counter = 0
+def findSubbagWithName(bag,searchName):
+    found = False
     for subBag in bagDictionary[bag]:
         if(subBag != "no other bag"):    
             subBagName = subBag[2:len(subBag)]
-            parentCount = int(subBag[0:2])
             if(subBagName == searchName):
-                counter = counter + parentCount
-            else:
-                counter = parentCount * countAllBagsInBagWithName(subBagName,searchName)
-    return counter
+                found = True
+    return Found
 
 #part 1
 counter = 0
 for bag in bagDictionary:
-    counter = counter + countAllBagsInBagWithName(bag,'shiny gold bag')
+    if(findSubbagWithName(bag,'shiny gold bag'))
+    counter = counter + 1
 print(counter)
