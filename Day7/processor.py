@@ -39,7 +39,8 @@ def countAllBagsInBagWithName(bag,searchName):
             parentCount = int(subBag[0:2])
             if(subBagName == searchName):
                 counter = counter + parentCount
-            
+            else:
+                counter = parentCount * countAllBagsInBagWithName(subBagName,searchName)
     return counter
 
 #part 1
