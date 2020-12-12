@@ -23,7 +23,7 @@ def isSeatOccupied(x,y,seats,offset):
         else:
             return False
     except KeyError:
-        return True
+        return False
 
 newSeats = {}
 changed = True
