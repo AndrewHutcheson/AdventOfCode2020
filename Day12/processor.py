@@ -75,26 +75,31 @@ for step in instructions:
     elif(dir == "W"):
         x -= qty
     elif(dir == "F"):
-        shipX += qty*(shipX-x)
-        shipY += qty*(shipY-y)
+        shipX += qty*x
+        shipY += qty*y
     elif(dir == "L"):
         if(qty == 90):
-            x = shipX - y
-            y = shipY + x
+            temp = x
+            x = -y
+            y = temp
         elif(qty == 180):
-            x = (shipX-x)
-            y = (shipY-y)
+            x = -x
+            y = -y
         elif(qty == 270):
-            x = shipX + y
-            y = shipY - x
+            temp = x
+            x = y
+            y = -temp
     elif(dir == "R"):
         if(qty == 90):
-            x = shipX + y
-            y = shipY - x
+            temp = x
+            x = y
+            y = -temp
         elif(qty == 180):
-            x = (shipX-x)
-            y = (shipY-y)
+            x = -x
+            y = -y
         elif(qty == 270):
-            x = shipX - y
-            y = shipY + x
-print(abs(x)+abs(y))
+            temp = x
+            x = -y
+            y = temp
+
+print(abs(shipX)+abs(shipY))
