@@ -97,5 +97,4 @@ for step in instructions:
         elif(qty == 270):
             x = shipX - y
             y = shipY + x
-    #print(curDirection)    
 print(abs(x)+abs(y))
