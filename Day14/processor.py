@@ -33,15 +33,10 @@ for address in addressList:
     sum += value
 print("part1",sum)
 
-#part 2
-stream = open("input.txt")
-lines = stream.read()
-data = lines.split("\n")
-#there's sometimes an empty newline at the end
-for row in data:
-    if(row == ""):
-        data.remove(row)
 
+###########################
+########## part 2 #########
+###########################
 addressList = {}
 
 def replacement(addressList,position,x):
@@ -52,22 +47,19 @@ def replacement(addressList,position,x):
         returnAddressList.append(address2)
     return returnAddressList
 
+m = 0
 for row in data:
     command = row.split(" = ")
     if(command[0] == "mask"):
         mask = command[1]
     else:
         address = str(command[0][4:len(command[0])-1])
-        binaryAddress = str(bin(int(address)).replace("0b", ""))
+        binaryAddress = str(bin(int(address)).replace("0b", "")).zfill(36)
         value = int(command[1])
-        binaryValue = str(bin(value).replace("0b", "")).zfill(36)
 
-        #for each x, create a copy replacing it with 1 and another copy with 0. Add that thing to a list
         subAddressList = [binaryAddress]
-        end = len(mask)
-        #print(mask[end-len(binaryAddress):end])
         n = 0
-        for position in mask[end-len(binaryAddress):end]:
+        for position in mask:
             if(position == "X"):
                 subAddressList0 = replacement(subAddressList,n,0)
                 subAddressList1 = replacement(subAddressList,n,1)
@@ -77,6 +69,11 @@ for row in data:
         for address in subAddressList:
             decimalAddress = int(address,2)
             addressList[decimalAddress] = value
+    #print(len(addressList)) #this checks out
+    #if(m > 0):
+        #break
+    m += 1
+
 sum = 0        
 for address in addressList:
     value = int(addressList[address])
