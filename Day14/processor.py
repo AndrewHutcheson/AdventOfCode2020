@@ -37,7 +37,7 @@ print("part1",sum)
 ###########################
 ########## part 2 #########
 ###########################
-addressList = {}
+
 
 def replacement(addressList,position,x):
     returnAddressList = []
@@ -47,35 +47,51 @@ def replacement(addressList,position,x):
         returnAddressList.append(address2)
     return returnAddressList
 
-m = 0
-for row in data:
-    command = row.split(" = ")
-    if(command[0] == "mask"):
-        mask = command[1]
-    else:
-        address = str(command[0][4:len(command[0])-1])
-        binaryAddress = str(bin(int(address)).replace("0b", "")).zfill(36)
-        value = int(command[1])
+def part2():
+    masterAddressList = {}
+    #m = 0 #used in debugging
+    for row in data:
+        command = row.split(" = ")
+        if(command[0] == "mask"):
+            mask = command[1]
+        else:
+            address = str(command[0][4:len(command[0])-1])
+            binaryAddress = str(bin(int(address)).replace("0b", "")).zfill(36)
+            value = int(command[1])
 
-        subAddressList = [binaryAddress]
-        n = 0
-        for position in mask:
-            if(position == "X"):
-                subAddressList0 = replacement(subAddressList,n,0)
-                subAddressList1 = replacement(subAddressList,n,1)
-                subAddressList = subAddressList0 + subAddressList1
-            n += 1
-        
-        for address in subAddressList:
-            decimalAddress = int(address,2)
-            addressList[decimalAddress] = value
-    #print(len(addressList)) #this checks out
-    #if(m > 0):
-        #break
-    m += 1
+            #First, let's replace all the positions that are a 1 or 0 in the mask
+            n = 0
+            for position in mask:
+                if(position == "1"):
+                    binaryAddress = binaryAddress[:n] + position + binaryAddress[n+1:]
+                n += 1
+            
+            #next lets tackle the ones that are an X in the mask
+            subAddressList = [binaryAddress]
+            n = 0
+            for position in mask:
+                if(position == "X"):
+                    subAddressList0 = replacement(subAddressList,n,0)
+                    subAddressList1 = replacement(subAddressList,n,1)
+                    subAddressList = subAddressList0 + subAddressList1
+                n += 1
+            
+            for address2 in subAddressList:
+                decimalAddress = int(address2,2)
+                masterAddressList[decimalAddress] = value
+            #print("BinA",binaryAddress)
+            #print("mask",mask)
+        #debugging stuff
+        #for newaddress in addressList:
+            #print("NewA",str(bin(int(newaddress)).replace("0b", "")).zfill(36))
+        #if(m > 0):
+            #break
+        #m += 1
+    return masterAddressList
 
+masterAddressList = part2()
 sum = 0        
-for address in addressList:
-    value = int(addressList[address])
+for masterAddress in masterAddressList:
+    value = int(masterAddressList[masterAddress])
     sum += value
 print("part2",sum)
