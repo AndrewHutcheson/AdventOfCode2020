@@ -1,4 +1,3 @@
-
 def getPositionN(iterations):
     lastNum = 0
     curNum = 0
