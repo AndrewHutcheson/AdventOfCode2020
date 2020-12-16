@@ -92,11 +92,46 @@ for departureItem in departureRanges:
             departureRangeRowIds[departureItem].append(columnToCheck)
         columnToCheck += 1
 
-for item in departureRangeRowIds:
-    print(item,":",len(departureRangeRowIds[item]),":",departureRangeRowIds[item])
-    #ok I admit I got lazy. Using the output from this print statement you can manually assign the fields to the correct column. If I have time I'll code it later.
+sortedRows = {}
+targetLength = 1
+while targetLength <= 20:
+    for item in departureRangeRowIds:
+        if len(departureRangeRowIds[item]) == targetLength:
+            sortedRows[item] = departureRangeRowIds[item]
+            break
+    targetLength += 1
 
-my_ticket = [59,101,191,149,167,197,199,137,163,131,113,67,103,97,61,139,157,151,193,53] #If I have time I'll code this later too
-#I know my "departure" rows are (indexed from 0) 2,9,11,14,13,1
+#ok now sortedRows is sorted by the first known value, then the next known, next known etc.
+takenColumns = []
+for fieldLabel in sortedRows:
+    possibleColumns = sortedRows[fieldLabel]
+    for column in possibleColumns:
+        if(column not in takenColumns):
+            takenColumns.append(column)
+            sortedRows[fieldLabel] = column
 
-print("part 2",my_ticket[2]*my_ticket[9]*my_ticket[11]*my_ticket[14]*my_ticket[13]*my_ticket[1])
+#ok, now sorted rows is what I ultimately wanted - the text title of the field (e.g. "departure location"), and its corresponding column number in the ticket data
+#the problem statement for part 2 just cares about the "departure" fields
+relevantColumnNumbers = []
+for title in sortedRows:
+    rowNum = sortedRows[title]
+    if(title.find("departure") != -1):
+        relevantColumnNumbers.append(rowNum)
+#checking and printing relevantColumnNumbers, I should know that "departure" rows are (indexed from 0) 2,9,11,14,13,1
+
+#now get my ticket because I haven't done that yet
+startFromHere = False
+my_Ticket = []
+for row in data:
+    line = row.split(": ")
+    if(line[0]) == "your ticket:":
+        startFromHere = True
+    elif(startFromHere):
+        my_Ticket = [int(n) for n in row.split(",")]
+        break #because I only want my ticket
+
+#and output the part2 value
+part2 = 1
+for multiplier in relevantColumnNumbers:
+    part2 *= my_Ticket[multiplier]
+print("part 2", part2)
