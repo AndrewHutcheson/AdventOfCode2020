@@ -70,7 +70,8 @@ for row in data:
     endNum0 = subrange0[1]
     startNum1 = subrange1[0]
     endNum1 = subrange1[1]
-    if(line[0].find("departure") != -1):
+    #if(line[0].find("departure") != -1):
+    if True:
         departureRanges[line[0]] = ([startNum0,endNum0,startNum1,endNum1])
         departureRangeRowIds[line[0]] = []
 
@@ -91,4 +92,11 @@ for departureItem in departureRanges:
             departureRangeRowIds[departureItem].append(columnToCheck)
         columnToCheck += 1
 
-print(departureRangeRowIds)
+for item in departureRangeRowIds:
+    print(item,":",len(departureRangeRowIds[item]),":",departureRangeRowIds[item])
+    #ok I admit I got lazy. Using the output from this print statement you can manually assign the fields to the correct column. If I have time I'll code it later.
+
+my_ticket = [59,101,191,149,167,197,199,137,163,131,113,67,103,97,61,139,157,151,193,53] #If I have time I'll code this later too
+#I know my "departure" rows are (indexed from 0) 2,9,11,14,13,1
+
+print("part 2",my_ticket[2]*my_ticket[9]*my_ticket[11]*my_ticket[14]*my_ticket[13]*my_ticket[1])
