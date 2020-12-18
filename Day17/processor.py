@@ -14,13 +14,13 @@ for row in data:
     iterations = 6
     expandedSpace = 2*iterations # I multiply by 2 for both directions getting another potential row each iteration
 
-    grid = [[['.' for _ in range(columns + expandedSpace)] for _ in range(rows + expandedSpace)] for _ in range(1 + expandedSpace)] #we start with 8x8x1 which is why z just is one
+    grid = [[['.' for x in range(columns + expandedSpace)] for y in range(rows + expandedSpace)] for z in range(1 + expandedSpace)] #we start with 8x8x1 which is why z just is one
 
 
 #populate the initial state
 for y, row in enumerate(data):
     for x, column in enumerate(row):
-        grid[iterations][y+iterations][x+iterations] = column
+        grid[iterations][y+iterations][x+iterations] = column #start at [iterations] because I shift my initial state to the center so it can expand outward
 
 def countActiveCells(inputGrid):
     count = 0
@@ -47,7 +47,7 @@ def countActiveNeighbors(point,inputGrid):
 #test cases
 #print(grid[6][12][11]) #yep 
 #print(countActiveNeighbors([6,12,11],grid)) #checks out.
-print("Loop # 0","-",countActiveCells(grid)) 
+print("3D Loop # 0","-",countActiveCells(grid)) 
 
 iteration = 1
 while iteration <= iterations:
@@ -69,7 +69,7 @@ while iteration <= iterations:
                         pass #remain inactive
     
     grid = copy.deepcopy(nextGrid)
-    print("Loop #",iteration,"-",countActiveCells(grid))
+    print("3D Loop #",iteration,"-",countActiveCells(grid))
     iteration += 1
 
 ###############################
@@ -105,13 +105,13 @@ columns = len(data[0])
 iterations = 6
 expandedSpace = 2*iterations # I multiply by 2 for both directions getting another potential row each iteration
 
-grid4D = [[[['.' for _ in range(columns + expandedSpace)] for _ in range(rows + expandedSpace)] for _ in range(1 + expandedSpace)] for _ in range(1 + expandedSpace)] #we start with 8x8x1 which is why z just is one
+grid4D = [[[['.' for x in range(columns + expandedSpace)] for y in range(rows + expandedSpace)] for z in range(1 + expandedSpace)] for w in range(1 + expandedSpace)] #we start with 8x8x1 which is why z just is one
 
 
 #populate the initial state
 for y, row in enumerate(data):
     for x, column in enumerate(row):
-        grid4D[iterations][iterations][y+iterations][x+iterations] = column
+        grid4D[iterations][iterations][y+iterations][x+iterations] = column #start at [iterations][iterations] because I shift my initial state to the center so it can expand outward
 
 #test cases
 #print(grid[6][12][11]) #yep 
@@ -133,7 +133,7 @@ while iteration <= iterations:
                         else:
                             next4DGrid[iw][iz][iy][ix] = "."
                     else:
-                        if(count4DActiveNeighbors(point,grid) == 3):
+                        if(count4DActiveNeighbors(point,grid4D) == 3):
                             next4DGrid[iw][iz][iy][ix] = "#"
                         else:
                             pass #remain inactive
