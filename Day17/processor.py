@@ -33,11 +33,11 @@ def countActiveCells(inputGrid):
 
 def countActiveNeighbors(point,inputGrid):
     activeNeighborCount = 0
-    for z in range(point[0]-1,point[0]+1):
-        for y in range(point[1]-1,point[1]+1):
-            for x in range(point[2]-1,point[2]+1):
+    for z in range(point[0]-1,point[0]+2):
+        for y in range(point[1]-1,point[1]+2):
+            for x in range(point[2]-1,point[2]+2):
                 try:
-                    if not (x == y == z == 0): #this is the point itself, not a neighbor
+                    if not((z == point[0]) and (y == point[1] and (x == point[2]))): #this is the point itself, not a neighbor
                         if(inputGrid[z][y][x] == "#"):
                             activeNeighborCount += 1
                 except IndexError: #because my point[n]+1/-1 might hit the edge of my 3Dspace, in which case it's an inactive cell
