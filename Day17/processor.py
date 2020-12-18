@@ -1,3 +1,5 @@
+import copy
+
 stream = open("input.txt")
 lines = stream.read()
 data = lines.split("\n")
@@ -6,21 +8,19 @@ for row in data:
     if(row == ""):
         data.remove(row)
 
-#note 1: if each cube only considers it's neighbors then after 6 cycles I shouldn't be more than plus or minue 6 away from the initial 8x8 grid. This gives [0-6 to 7+6] or [-6 to 13]
-
 #part 1
     rows = len(data)
     columns = len(data[0])
     iterations = 6
-    expandedSpace = 2*iterations #*2 for both directions
+    expandedSpace = 2*iterations # I multiply by 2 for both directions getting another potential row each iteration
 
     grid = [[['.' for _ in range(columns + expandedSpace)] for _ in range(rows + expandedSpace)] for _ in range(1 + expandedSpace)] #we start with 8x8x1 which is why z just is one
 
 
 #populate the initial state
-for x, row in enumerate(data):
-    for y, column in enumerate(row):
-        grid[iterations][x+iterations][y+iterations] = column
+for y, row in enumerate(data):
+    for x, column in enumerate(row):
+        grid[iterations][y+iterations][x+iterations] = column
 
 def countActiveCells(inputGrid):
     count = 0
@@ -33,28 +33,31 @@ def countActiveCells(inputGrid):
 
 def countActiveNeighbors(point,inputGrid):
     activeNeighborCount = 0
-    inactiveNeighborCount = 0
-    for x in range(point[0]-1,point[0]+1):
+    for z in range(point[0]-1,point[0]+1):
         for y in range(point[1]-1,point[1]+1):
-            for z in range(point[2]-1,point[2]+1):
+            for x in range(point[2]-1,point[2]+1):
                 try:
                     if not (x == y == z == 0): #this is the point itself, not a neighbor
-                        if(inputGrid[x][y][z] == "#"):
+                        if(inputGrid[z][y][x] == "#"):
                             activeNeighborCount += 1
-                        else:
-                            inactiveNeighborCount += 1
-                except IndexError: #because my point[n]+1/-1 might hit the edge of my #3Dspace
+                except IndexError: #because my point[n]+1/-1 might hit the edge of my 3Dspace, in which case it's an inactive cell
                     pass
     return activeNeighborCount
 
+#test cases
+#print(grid[6][12][11]) #yep 
+#print(countActiveNeighbors([6,12,11],grid)) #checks out.
+print("Loop # 0","-",countActiveCells(grid)) 
+
 iteration = 1
 while iteration <= iterations:
-    nextGrid = grid.copy()
+    nextGrid = copy.deepcopy(grid) #compound objects, like a list of lists, use references on shallow copies so I need a deep copy
     for iz in range (1 + expandedSpace):
         for iy in range(rows + expandedSpace):
             for ix in range(columns + expandedSpace):
-                point = [ix,iy,iz]
-                if(x == "#"):
+                point = [iz,iy,ix]
+                #print(countActiveNeighbors(point,grid))
+                if(grid[iz][iy][ix] == "#"):
                     if(countActiveNeighbors(point,grid) == 2) or (countActiveNeighbors(point,grid) == 3):
                         pass #remain active
                     else:
@@ -65,6 +68,6 @@ while iteration <= iterations:
                     else:
                         pass #remain inactive
     
-    grid = nextGrid.copy()
+    grid = copy.deepcopy(nextGrid)
     print("Loop #",iteration,"-",countActiveCells(grid))
     iteration += 1
