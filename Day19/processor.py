@@ -1,7 +1,7 @@
 import re
 #process input
-stream = open("sampleInput.txt")
-#stream = open("input.txt")
+#stream = open("sampleInput.txt")
+stream = open("input.txt")
 lines = stream.read()
 data = lines.split("\n\n")
 rules = data[0].split("\n")
@@ -37,7 +37,7 @@ def convertToRegex(rule):
     else:
         if(rule.find("|") > 0):
             subRules = rule.split(" | ")
-            returnRule = returnRule + "["
+            returnRule = returnRule + "("
             for sub in subRules:
                 nums = sub.split(" ")
                 for num in nums:
@@ -45,30 +45,34 @@ def convertToRegex(rule):
                     returnRule = returnRule + convertToRegex(rulesDict[int(num)])
                 returnRule = returnRule + "|"
             returnRule = returnRule[0:len(returnRule)-1] #get rid of last |
-            returnRule = returnRule + "]"
+            returnRule = returnRule + ")"
         else: #there is no or operator
             nums = rule.split(" ")
-            returnRule = returnRule + "["
+            returnRule = returnRule + "("
             for num in nums:
                 #print(rulesDict[int(num)])
                 returnRule = returnRule + convertToRegex(rulesDict[int(num)])
-            returnRule = returnRule + "]"
+            returnRule = returnRule + ")"
     return returnRule
 
 for row in rulesDict:
     rule = rulesDict[row]
-    regExRules[row] = convertToRegex(rule)
+    if(convertToRegex(rule)[0] == "("):
+        regExRules[row] = convertToRegex(rule)[1:len(convertToRegex(rule))-1]
+    else:
+        regExRules[row] = convertToRegex(rule)
 
-#test case
-#print(convertToRegex("23 105 | 105 23")) #this is 104:
-#print()
-#print(convertToRegex("104 105")) #this is 104:
-#print()
-print(regExRules)
-
+#print(regExRules)
+#part 1 I just want rule 0
+count = 0
+rule = "^" + regExRules[0] + "\Z"
 for row in datum:
-    for rule in regExRules:
-        if(re.match(regExRules[rule],row)):
-            print(row,"matches",regExRules[rule])
-        else:
-            print(row,"does not match",regExRules[rule])
+    #print(re.match(rule,row))
+    if(re.match(rule,row)):
+        #print(row,"matches",rule)
+        count += 1
+    else:
+        pass#print(row,"does not match",rule)
+    #print()
+
+print("part 1:",count)
