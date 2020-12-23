@@ -76,3 +76,12 @@ for row in datum:
     #print()
 
 print("part 1:",count)
+
+#part 2
+rulesDict[8] = "42 | 42 8"
+rulesDict[11] = "42 31 | 42 11 31"
+regExRules = {}
+
+def convertToRegexPart2(rule,ruleNum,recursionDepth):
+    #ok for part 2 I want this function to write to regExRules at each depth of the recursion, up to a recursion depth of 88, where 88 is the max length of one of the abab data strings
+    pass
