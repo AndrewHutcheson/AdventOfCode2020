@@ -33,7 +33,7 @@ for line in lines:
 
 print(count)
 
-#####part two#####
+#####part two######
 def is_password_valid2(position1,position2,requirement,password):
     #indexing by definition for the problem starts at one, not zero
     requirements_met = 0
