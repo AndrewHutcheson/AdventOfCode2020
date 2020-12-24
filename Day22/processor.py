@@ -22,8 +22,8 @@ for row in data:
 while (len(player1) > 0) and (len(player2) > 0):
     print("player 1's deck:",player1)
     print("player 2's deck:",player2)
-    player1Card = player1.pop(len(player1)-1)
-    player2Card = player2.pop(len(player2)-1)
+    player1Card = int(player1.pop(len(player1)-1))
+    player2Card = int(player2.pop(len(player2)-1))
     print("player1 plays:",player1Card)
     print("player2 plays:",player2Card)
     if player1Card > player2Card:
