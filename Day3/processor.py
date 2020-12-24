@@ -30,7 +30,7 @@ def calculate_slope(slope_x,slope_y):
 #part 1
 print(calculate_slope(3,1))
 
-#part 2
+#part 2#
 a = calculate_slope(1,1)
 b = calculate_slope(3,1)
 c = calculate_slope(5,1)
