@@ -14,4 +14,5 @@ def getPositionN(iterations):
     return lastNum
 
 print("part 1:",getPositionN(2020))
+
 print("part 2:",getPositionN(30000000))
