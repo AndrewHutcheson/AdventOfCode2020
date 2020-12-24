@@ -31,7 +31,7 @@ column = int(decode_seat(column),2)
 
 print(row*8+column)
 
-#part 2
+#part 2#
 #convert every row to its seatID
 seatNums = []
 for seat in seats:
