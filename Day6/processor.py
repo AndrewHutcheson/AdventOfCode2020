@@ -24,7 +24,7 @@ for line in lines:
 
 print(total)
 
-#part 2
+#part 2#
 groupQuestions = set()
 tempGroupQuestions = groupQuestions.copy()
 groups = dict()
