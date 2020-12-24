@@ -47,7 +47,7 @@ def checkItemValidity(itemType:str,value:str):
     return False
 
 
-#part one
+#part one#
 stream = open("input.txt")
 lines = stream.readlines()
 
