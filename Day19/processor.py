@@ -82,6 +82,49 @@ rulesDict[8] = "42 | 42 8"
 rulesDict[11] = "42 31 | 42 11 31"
 regExRules = {}
 
-def convertToRegexPart2(rule,ruleNum,recursionDepth):
-    #ok for part 2 I want this function to write to regExRules at each depth of the recursion, up to a recursion depth of 88, where 88 is the max length of one of the abab data strings
-    pass
+def convertToRegexPart2(rule):
+    if(rule.find(" 8 ")>-1) or (rule.find(" 11 ")>-1):
+        return ""
+    returnRule = ""
+    if(rule == "a" or rule == "b"):
+        returnRule = rule
+    else:
+        if(rule.find("|") > 0):
+            subRules = rule.split(" | ")
+            returnRule = returnRule + "("
+            for sub in subRules:
+                nums = sub.split(" ")
+                for num in nums:
+                    #print(rulesDict[int(num)])
+                    returnRule = returnRule + convertToRegex(rulesDict[int(num)])
+                returnRule = returnRule + "|"
+            returnRule = returnRule[0:len(returnRule)-1] #get rid of last |
+            returnRule = returnRule + ")"
+        else: #there is no or operator
+            nums = rule.split(" ")
+            returnRule = returnRule + "("
+            for num in nums:
+                #print(rulesDict[int(num)])
+                returnRule = returnRule + convertToRegex(rulesDict[int(num)])
+            returnRule = returnRule + ")"
+    return returnRule
+
+for row in rulesDict:
+    rule = rulesDict[row]
+    if(convertToRegexPart2(rule)[0] == "("):
+        regExRules[row] = convertToRegexPart2(rule)[1:len(convertToRegexPart2(rule))-1]
+    else:
+        regExRules[row] = convertToRegexPart2(rule)
+
+count = 0
+rule = "^" + regExRules[0] + "\Z"
+for row in datum:
+    #print(re.match(rule,row))
+    if(re.match(rule,row)):
+        #print(row,"matches",rule)
+        count += 1
+    else:
+        pass#print(row,"does not match",rule)
+    #print()
+
+print("part 2:",count)        
