@@ -84,7 +84,7 @@ regExRules = {}
 
 def convertToRegexPart2(rule):
     if(rule.find(" 8 ")>-1) or (rule.find(" 11 ")>-1):
-        return ""
+        return rule.strip
     returnRule = ""
     if(rule == "a" or rule == "b"):
         returnRule = rule
